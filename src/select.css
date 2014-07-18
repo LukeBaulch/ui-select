@@ -24,6 +24,15 @@
     border-color: #D44950;
 }
 
+ /* Hide select2 search  */
+.select2 .select2-search {
+	display: none;
+}
+
+.select2  .select2-with-searchbox  .select2-search {
+	display: block;
+}
+
 /* Selectize theme */
 
 /* Helper class to show styles when focus */

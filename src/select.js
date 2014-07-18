@@ -127,6 +127,12 @@
     ctrl.resetSearchInput = undefined; // Initialized inside uiSelect directive link function
     ctrl.refreshDelay = undefined; // Initialized inside uiSelectChoices directive link function
 
+    // hide search if minimum results
+    ctrl.minimumResultsForSearch = undefined;
+    ctrl.showSearch = function () {
+      return ctrl.minimumResultsForSearch === null ? true : ctrl.minimumResultsForSearch >= 0 && ctrl.items && ctrl.items.length >= ctrl.minimumResultsForSearch;
+    };
+
     var _searchInput = $element.querySelectorAll('input.ui-select-search');
     if (_searchInput.length !== 1) {
       throw uiSelectMinErr('searchInput', "Expected 1 input.ui-select-search but got '{0}'.", _searchInput.length);
@@ -495,6 +501,10 @@
 
         // See Click everywhere but here event http://stackoverflow.com/questions/12931369
         $document.on('click', onDocumentClick);
+
+        attrs.$observe('minimumResultsForSearch', function () {
+          $select.minimumResultsForSearch = attrs.minimumResultsForSearch !== undefined ? attrs.minimumResultsForSearch : null;
+        });
 
         scope.$on('$destroy', function() {
           $document.off('click', onDocumentClick);
